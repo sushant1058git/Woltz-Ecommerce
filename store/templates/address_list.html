@@ -1,0 +1,69 @@
+{%extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+  <div class="cotainer border col-9 mx-auto mt-4 ">
+
+    <!-- Address cards -->
+    <div class="container mt-4 ">
+      <h5><img src="{% static 'image/map.png' %}" height="20" width="20"> Your addresses |  <small>
+        <a href="add_address" class="text-decoration-none text-muted" style="font-size: smaller;">Add a new address
+        </a></small></h5>
+     
+      <div class="row">
+
+
+        {% for address in address %}
+
+        <div class=" col-4 mt-4 p-0 m-3 " style="max-width: 18rem;">
+          <div class="card-body pt-0 pb-0 mt-2 mx-auto col-12">
+            <h6>
+              <div> {{address.full_name}}</div>
+            </h6>
+            <p class="card-title p-0">{{address.mobile}}</p>
+            <small class="card-text p-0">{{address.address}}</small><br>
+            <small class="card-text p-0">{{address.city}}, {{address.state}} {{address.pin}}</small><br><br>
+
+            <footer">
+              
+                <div class="container">
+                  <form action="address_list" method="POST">
+                    {% csrf_token %}
+                    <input hidden type="text" name="delete_address" value="{{address.id}}">
+                    <button
+                      class="btn btn-secondary btn-sm col-5 float-end p-0 m-0 rounded-pill mb-1"><small>Delete</small></button>
+                  </form>
+                  <form action="address_list" method="POST">
+                    {% csrf_token %}
+                    <input hidden type="text" name="edit_address" value="{{address.id}}">
+                    <button
+                      class="btn btn-secondary btn-sm col-5 p-0 m-0 mb-1 rounded-pill"><small>Edit</small></button>
+                  </form>
+
+                </div>
+              
+            </footer>
+
+          </div>
+        </div>
+        {% endfor %}
+        
+         
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+
+
+
+
+
+  {% endblock content %}

@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load cart %}
+
+
+
+<div class="container">
+  <table class="table"><br>
+    <h4>Shopping Cart</h4>
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th class="text-muted">Total Price</th>
+      </tr>
+    </thead>
+    <tbody>
+   
+      {% for instance in products %}
+      <tr>
+        <td scope="row">
+          <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-4">
+                <img src="{{instance.products_image.url}}" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{instance.name}}</h5>
+                  <small class="text-success">In stock</small>
+                  <p class="card-text">{{instance.description}}</p>
+                  <p>{{instance.price|currency}}</p>
+                  <p class="card-text"><small class="text-muted">Eligible for free shipping</small></p>
+                  <footer>
+                    
+                    
+                      <div class="container col-12">
+                        <div class="row">
+                        <span class="text-muted col-6 mt-1"> Quantity : {{instance|quantity:request.session.cart}}</span>
+                        <span class="text-muted col-6 float-end mb-2 pb-2">
+
+                          {% if instance|quantity:request.session.cart > 1 %}
+                          <form action="cart" method="POST">
+                            {% csrf_token %}
+                            <input hidden type="text" name="delete" value="{{instance.id}}">
+                            <Small><input  class="btn text-muted" style="font-size: smalls;" type="submit"  value="Delete"></Small>
+                          </form>
+                          {% elif instance|quantity:request.session.cart == 1 %}
+                          <form action="cart" method="POST">
+                            {% csrf_token %}
+                            <input hidden type="text" name="delete" value="{{instance.id}}">
+                            <Small><input  class="btn text-muted  " style="font-size: small;" type="submit"  value="Remove from cart"></Small>
+                          </form>
+
+                          {% else %}
+
+                          {{instance.remove}}
+                                                    {% endif %}
+                        </span>
+                      </div>
+                    </div>
+
+
+                    </footer>
+              </div>
+
+
+            </div>
+          </div>
+</div>
+
+</div>
+</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span style="font-size: 25;">{{instance|total_price:request.session.cart|currency}}</span></td>
+
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</tbody>
+</table>
+<div class="container">
+  <div class="col-3 float-end mx-auto pb-4 mx-4">
+    <h5>Subtotal({{request.session.cart|total_cart_quantity}} items) :
+      {{products|cart_total:request.session.cart|currency}}</h5>
+    <!-- <form action="address" method="POST"> -->
+      <a class="btn btn-warning rounded-pill mx-5 " href="address" role="button">Proceed to buy</a>
+    <!-- </form> -->
+  </div>
+</div>
+</div>
+</div>
+
+
+{% endblock content %}

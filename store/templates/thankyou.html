@@ -1,0 +1,26 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+
+<div class="container mt-4 pt-4">
+    <div class="card mb-3 mx-auto" style="max-width: 600px;">
+        <div class="row g-0 ">
+          <div class="col-4">
+            <img src="{% static 'image/check.png' %}" class="img-fluid rounded-start" alt="...">
+        </div>
+          <div class="col-8 p-0">
+            <div class="card-body">
+              <h5 class="card-title">Thankyou for shopping with us</h5>
+              <p class="text-success">Your order has been placed!!</p>
+              <p>See order <a href="order_list" class="card-text  text-decoration-none pt-0 mt-0">status</a></p><br><br>
+              <a href="/" class="card-text  text-decoration-none">Shop more ></a><br><br>
+              
+              
+        </div>
+            </div>
+</div>
+               
+</div>
+
+
+{% endblock content %}

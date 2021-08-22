@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+
+
+<div class="container mt-4 pt-4">
+    <div class="card mb-3 mx-auto" style="max-width: 600px;">
+        <div class="row g-0 ">
+          <div class="col-4">
+            <img src="{% static 'image/empty_cart.png' %}" class="img-fluid rounded-start" alt="...">
+        </div>
+          <div class="col-8 p-0">
+            <div class="card-body">
+              <h5 class="card-title">Your Woltz Basket is empty!!</h5>
+              <a href="/" class="card-text text-muted">Shop today’s deals</a><br><br>
+              <div>
+                <a class="btn btn-secondary rounded-pill" href="signup" role="button">Signup now</a>
+                <a class="btn btn-warning rounded-pill float-end" href="login" role="button">Sign in to your account</a>
+              </div>
+              
+        </div>
+            </div>
+</div>
+               
+</div>
+
+
+{% endblock content %}

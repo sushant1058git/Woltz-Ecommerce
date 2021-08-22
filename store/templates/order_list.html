@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+{% load static %}
+
+
+{% if order %}
+<div class="container col-9 mx-auto border shadow mt-4 pt-3">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sno</th>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Date Purchased</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in order %}
+            <tr>
+                <td scope="row">{{forloop.counter}}</td>
+                <td><img src="{{order.product.products_image.url}}" class="rounded-circle" style="height: 80px;" alt=""></td>
+                <td>{{order.quantity}}</td>
+                <td>{{order.price|currency}}</td>
+                <td>{{order.price|multiply:order.quantity|currency}}</td>
+                <td>{{order.date}}</td>
+                {% if order.delivered %}
+                <td class="badge bg-success rounded-pill mt-2">Delivered</td>
+                {% else %}
+                <td class="badge bg-warning rounded-pill mt-2">Pending</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</div>
+{% else %}
+
+<div class="container mt-4 pt-4">
+    <div class="card mb-3 mx-auto" style="max-width: 600px;">
+        <div class="row g-0 ">
+          <div class="col-4">
+            <img src="{% static 'image/order.png' %}" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-8 p-0">
+            <div class="card-body">
+              <h5 class="card-title mx-4">No Order to display</h5>
+              <a href="/" class="card-text text-muted mx-4">Order now</a><br><br>
+            </div>
+          </div>
+        </div>
+               
+    </div>
+</div>
+
+
+
+{% endif %}
+
+
+{% endblock content %}
+
+

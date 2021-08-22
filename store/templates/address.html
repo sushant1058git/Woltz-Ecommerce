@@ -1,0 +1,251 @@
+{% load static %}
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Your addresses</title>
+  </head>
+  <body>
+    
+    <div class="cotainer">
+
+              <!-- Address cards -->
+
+       {% if add %}       
+      <div class="container border  col-9  mx-auto p-3 m-4">
+        <h5 ><img src="{% static 'image/map.png' %}"  height="20" width="20"> Your addresses</h5> </h5>
+        <small >Is the address you'd like to use displayed below? If so, click the corresponding "Deliver to this 
+          address" button.Or you can<a href="#add_address" class="text-decoration-none"> enter a new delivery address.</a> </small>
+        <div class="row">
+
+         
+        {% for address in add %}
+      
+        <div class="col-4 mt-4 p-0 m-1" style="max-width: 18rem;" >
+          <div class="card-body pt-0 pb-0 mt-2">
+            <h6><div><img src="{% static 'image/map.png' %}"  height="20" width="20"> {{address.full_name}}</div></h6>
+            <p class="card-title p-0">{{address.mobile}}</p>
+            <small class="card-text p-0">{{address.address}}</small><br>
+            <small class="card-text p-0">{{address.city}}, {{address.state}} {{address.pin}}</small><br><br>
+           
+            <footer >
+              <form method="POST" action="review_order">
+                {% csrf_token %}
+              <input  hidden type="text" name="address_id" value="{{address.id}}">
+              <button class="btn btn-warning btn-sm col-12 mx-auto rounded-pill " type="submit">Deliver to this address</button>
+            </form>
+              
+                <div class="container-fluid mt-3 ">
+                 <form action="address" method="POST">                
+                   {% csrf_token %}
+                  <input hidden type="text" name="delete_address" value="{{address.id}}">
+                  <button class="btn btn-secondary btn-sm col-5 float-end rounded-pill mb-1"><small>Delete</small></button>
+                 </form>
+                 <form action="address" method="POST">
+                  {% csrf_token %}
+                  <input hidden type="text" name="edit_address" value="{{address.id}}">
+                  <button class="btn btn-secondary btn-sm col-4  mb-1 rounded-pill"><small>Edit</small></button>
+                 </form>
+
+                </div>
+              
+            </footer>
+          
+          </div>
+      </div>
+      {% endfor %}
+    
+    </div>
+      </div>
+  
+      
+      </div>
+  
+                <!-- Address -->
+        <div class="p-3 m-4 border col-9  mx-auto" id="add_address" >
+          <h5 >  <img src="{% static 'image/map.png' %}"  height="20" width="20" > Add a delivery address</h5> </h5><br>
+          <form class="row g-3" action="review_order" method="POST">
+            {% csrf_token %}
+            <div class="col-md-6 ">
+              <label class="form-label text-dark">Full Name</label>
+              <input required type="text" class="form-control form-control-sm border-dark" name="full_name">
+            </div>
+            <div class="col-md-6">
+              <label  class="form-label text-dark">Mobile Number</label>
+              <input required type="text" class="form-control form-control-sm border-dark" name="mobile">
+            </div>
+            <div class="col-12">
+              <label for="inputAddress" class="form-label text-dark">Address line 1</label>
+              <input required type="text" class="form-control form-control-sm border-dark" name="address" placeholder="1234 Main St">
+            </div>
+            <div class="col-md-6">
+              <label for="inputCity" class="form-label text-dark">City</label>
+              <input required type="text" class="form-control form-control-sm border-dark" name="city">
+            </div>
+            <div class="col-md-4">
+              <label for="inputState" class="form-label text-dark">State</label>
+              <select name="state" class="form-select form-select-sm border-dark">
+                <option value="-------">-------</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Chandigarh">Chandigarh</option>
+                <option value="Chhattisgarh">Chhattisgarh</option>
+                <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                <option value="Daman and Diu">Daman and Diu</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Lakshadweep">Lakshadweep</option>
+                <option value="Puducherry">Puducherry</option>
+                <option value="Goa">Goa</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Manipur">Manipur</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Mizoram">Mizoram</option>
+                <option value="Nagaland">Nagaland</option>
+                <option value="Odisha">Odisha</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Sikkim">Sikkim</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Tripura">Tripura</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Uttarakhand">Uttarakhand</option>
+                <option value="West Bengal">West Bengal</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+              <label for="inputZip" class="form-label text-dark">Pin code</label>
+              <input required type="number" class="form-control form-control-sm border-dark" name="pin">
+            </div>
+            
+            <footer>
+                <br>
+            <br>
+                <div class="col-12">
+                    <input type="submit" class="btn btn-warning float-end rounded-pill"  value="Use this address">
+                  </div>
+                  
+            </footer>
+          </form>
+          </div>
+
+
+
+
+      {% else %}
+
+               <!-- Address -->
+               <div class="p-3 m-4 border col-9  mx-auto" id="add_address" >
+                <h5 >  <img src="{% static 'image/map.png' %}"  height="20" width="20" > Add a delivery address</h5> </h5><br>
+                <form class="row g-3" action="review_order" method="POST">
+                  {% csrf_token %}
+                  <div class="col-md-6 ">
+                    <label class="form-label text-dark">Full Name</label>
+                    <input required type="text" class="form-control form-control-sm border-dark" name="full_name">
+                  </div>
+                  <div class="col-md-6">
+                    <label  class="form-label text-dark">Mobile Number</label>
+                    <input required type="text" class="form-control form-control-sm border-dark" name="mobile">
+                  </div>
+                  <div class="col-12">
+                    <label for="inputAddress" class="form-label text-dark">Address line 1</label>
+                    <input required type="text" class="form-control form-control-sm border-dark" name="address" placeholder="1234 Main St">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputCity" class="form-label text-dark">City</label>
+                    <input required type="text" class="form-control form-control-sm border-dark" name="city">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="inputState" class="form-label text-dark">State</label>
+                    <select name="state" class="form-select form-select-sm border-dark">
+                      <option value="-------">-------</option>
+                      <option value="Andhra Pradesh">Andhra Pradesh</option>
+                      <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                      <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                      <option value="Assam">Assam</option>
+                      <option value="Bihar">Bihar</option>
+                      <option value="Chandigarh">Chandigarh</option>
+                      <option value="Chhattisgarh">Chhattisgarh</option>
+                      <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                      <option value="Daman and Diu">Daman and Diu</option>
+                      <option value="Delhi">Delhi</option>
+                      <option value="Lakshadweep">Lakshadweep</option>
+                      <option value="Puducherry">Puducherry</option>
+                      <option value="Goa">Goa</option>
+                      <option value="Gujarat">Gujarat</option>
+                      <option value="Haryana">Haryana</option>
+                      <option value="Himachal Pradesh">Himachal Pradesh</option>
+                      <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                      <option value="Jharkhand">Jharkhand</option>
+                      <option value="Karnataka">Karnataka</option>
+                      <option value="Kerala">Kerala</option>
+                      <option value="Madhya Pradesh">Madhya Pradesh</option>
+                      <option value="Maharashtra">Maharashtra</option>
+                      <option value="Manipur">Manipur</option>
+                      <option value="Meghalaya">Meghalaya</option>
+                      <option value="Mizoram">Mizoram</option>
+                      <option value="Nagaland">Nagaland</option>
+                      <option value="Odisha">Odisha</option>
+                      <option value="Punjab">Punjab</option>
+                      <option value="Rajasthan">Rajasthan</option>
+                      <option value="Sikkim">Sikkim</option>
+                      <option value="Tamil Nadu">Tamil Nadu</option>
+                      <option value="Telangana">Telangana</option>
+                      <option value="Tripura">Tripura</option>
+                      <option value="Uttar Pradesh">Uttar Pradesh</option>
+                      <option value="Uttarakhand">Uttarakhand</option>
+                      <option value="West Bengal">West Bengal</option>
+                      </select>
+                  </div>
+                  <div class="col-md-2">
+                    <label for="inputZip" class="form-label text-dark">Pin code</label>
+                    <input required type="number" class="form-control form-control-sm border-dark" name="pin">
+                  </div>
+                  
+                  <footer>
+                      <br>
+                  <br>
+                      <div class="col-12">
+                          <input type="submit" class="btn btn-warning float-end rounded-pill"  value="Use this address">
+                        </div>
+                        
+                  </footer>
+                </form>
+                </div>
+          {% endif %}      
+          
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
+
+
+  
+      
+      
+

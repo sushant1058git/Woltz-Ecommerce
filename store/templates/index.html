@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load cart %}
+
+<!--body-->
+<div class="container-fluid ">
+  <div class="row">
+
+
+    <!-- filter -->
+<div class="col-lg-3 my-2">
+  <div class="list-group ">
+    <a href="/" class="list-group-item list-group-item-action">All Categories</a>
+    {% for instance in category %}
+    <a href="/?category={{instance.id}}" class="list-group-item list-group-item-action">{{instance.category_name}}</a>
+{% endfor %}
+  </div>
+
+</div>
+
+
+<!-- products -->
+
+  <div class="col-lg-9">
+    <div class="row mx-auto">
+          {% for instance in product %}
+    <div class="card mx-auto my-2 pt-2" id= {{instance.id}} style="width: 14rem;">
+      <img src="{{instance.products_image.url}}" class="card-img-top" alt="..." height="300px", width="350px">
+      <div class="card-body ">
+        <p class="card-title ">{{instance.name}}</p>
+        <h6 class="card-text">{{instance.price|currency}}</h6>
+        <p class="card-text  text-truncate">{{instance.description}}</p>
+      </div>
+
+      <footer>
+        
+      
+
+      
+        <form action="/#{{instance.id}}" method="POST">
+          {% csrf_token %}
+          <input hidden type="text" name="product_id" value='{{instance.id}}'>
+          <button type="submit" class="btn btn-dark d-block col-12 rounded-pill btn-sm mt-2 mb-2 " value="" >Add to cart
+            {% if instance|is_in_cart:request.session.cart and instance|quantity:request.session.cart > 0 %}
+            <span class="badge bg-warning text-dark">{{instance|quantity:request.session.cart}}</span>
+            {% endif %}
+          </button>
+        </form>
+      </footer>
+    </div>
+      {% endfor %}
+    </div>
+  </div>
+  </div>
+</div>
+
+{% endblock content %}
